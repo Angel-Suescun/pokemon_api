@@ -48,6 +48,8 @@ class PokemonService:
     
     def release_pokemon(self, identifier: int | str) -> dict:
         team = self.repo.get_team()
+        if not team:
+            raise ValueError("El equipo está vacío. No hay Pokémon para liberar.")
         for pokemon in team:
             if str(pokemon["id"]) == str(identifier) or pokemon["name"].lower() == str(identifier).lower():
                 self.repo.remove_from_team(pokemon)
